@@ -14,6 +14,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./wayland.nix
   ];
 
   nixpkgs = {
@@ -47,13 +48,36 @@
       # Hint electron apps to use wayland
       NIXOS_OZONE_WL = "1";
     };
-    packages = [];
-  };
+    packages = with pkgs; [ 
+      # Waybar:
+      # Special override of attributes allows workspaces to correctly be displayed on hyprland
+      (waybar.overrideAttrs (oldAttrs: {
+          mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+        })
+      )
 
-  wayland.windowManager.hyprland = {
-     enable = true;
-     enableNvidiaPatches = true;
-     xwayland.enable = true;
+      # Notification daemon
+      dunst
+      libnotify
+
+      # Wallpaper daemon
+      swww
+
+      # Terminal
+      kitty
+
+      # App launcher
+      rofi-wayland
+      
+      # Browsers
+      librewolf
+      chromium
+
+      # Extra
+      vscode
+      discocss
+      spotifyd
+    ];
   };
 
   # Add stuff for your user as you see fit:
