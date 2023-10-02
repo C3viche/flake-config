@@ -41,6 +41,19 @@
   home = {
     username = "c3viche";
     homeDirectory = "/home/c3viche";
+    sessionVariables = {
+      # If cursor becomes invisible
+      WLR_NO_HARDWARE_CURSORS = "1";
+      # Hint electron apps to use wayland
+      NIXOS_OZONE_WL = "1";
+    };
+    packages = [];
+  };
+
+  wayland.windowManager.hyprland = {
+     enable = true;
+     enableNvidiaPatches = true;
+     xwayland.enable = true;
   };
 
   # Add stuff for your user as you see fit:

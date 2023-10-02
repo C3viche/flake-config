@@ -44,7 +44,6 @@
         # > Our main home-manager configuration file <
         modules = [
 	  hyprland.homeManagerModules.default
-	  {wayland.windowManager.hyprland.enable = true;}
 	  ./home-manager/home.nix
         ];
       };
