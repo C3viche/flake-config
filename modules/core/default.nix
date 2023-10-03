@@ -16,7 +16,7 @@
       ./system.nix
       ./user.nix
       ./environment.nix
-      ./hyprland.nix
+      ./programs
 
       # Wayland based programs for hyprland
     ];
