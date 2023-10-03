@@ -13,5 +13,8 @@
         kate
       ];
     };
+
   };
+    
+  users.defaultUserShell = pkgs.zsh;
 }
