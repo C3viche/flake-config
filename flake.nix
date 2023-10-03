@@ -27,12 +27,8 @@
   in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        # > Our main nixos configuration file <
-        modules = [./nixos/configuration.nix];
-      };
+    nixosConfigurations = import ./modules/core/default.nix {
+        inherit self nixpkgs inputs; 
     };
 
     # Standalone home-manager configuration entrypoint
