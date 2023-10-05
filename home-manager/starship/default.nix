@@ -2,41 +2,72 @@
   pkgs,
   ...
 }: {
-  programs.starship = let 
-    flavour = "mocha";
-  in {
+  programs.starship = {
     enable = true;
+    
     enableZshIntegration = true;
     settings = {
-      character = {
-        success_symbol = "[](green)";
-        error_symbol = "[✗](red)";
-      };
+      format = "$username$hostname$directory$git_branch$git_state$git_status$git_metrics$fill$nodejs$cmd_duration $jobs $time$line_break$character";
+      nodejs.format = "[$symbol($version )]($style)";
+
+      fill.symbol = " ";
+
       directory = {
-        truncation_length = 4;
-        style = "bold blue";
+        style = "blue";
+        read_only = " ";
+	truncation_length = 4;
+	truncate_to_repo = false;
       };
-      git_status = {
-        deleted = "✗";
-        modified = "✶";
-        staged = "✓";
-        stashed = "≡";
+
+      character = {
+        success_symbol = "[❯](purple)";
+        error_symbol = "[❯](red)";
+        vicmd_symbol = "[❮](green)";
       };
+
       git_branch = {
-        format = " [$symbol$branch]($style) ";
-        symbol = " ";
-        style = "bold yellow";
+        symbol = " ";
+        format = "[$symbol$branch]($style) ";
+        style = "bright-purple";
       };
-      palette = "catppuccin_${flavour}";
-    }
-        // builtins.fromTOML (builtins.readFile
-          (pkgs.fetchFromGitHub
-            {
-              owner = "catppuccin";
-              repo = "starship";
-              rev = "3e3e54410c3189053f4da7a7043261361a1ed1bc";
-              sha256 = "soEBVlq3ULeiZFAdQYMRFuswIIhI9bclIU8WXjxd7oY=";
-            }
-	    + /palettes/${flavour}.toml));
+
+      jobs = {
+        symbol = "";
+	style = "bold red";
+	number_threshold = 1;
+	format = "[$symbol]($style)";
+      };
+
+      git_status = {
+        format = "([$all_status$ahead_behind]($style) )";
+	style = "cyan";
+      };
+ 
+      git_state = {
+        format = "\([$state( $progress_current/$progress_total)]($style)\) ";
+        style = "bright-black";
+      };
+ 
+      git_metrics.disabled = false;
+ 
+      cmd_duration = {
+        format = "[$duration]($style)";
+        style = "yellow";
+      };
+ 
+      memory_usage.symbol = " "; 
+
+      rust.symbol = " ";
+ 
+      time.disabled = false;
+
+      custom.stunnel = {
+        when = "ps aux | grep stunnel | grep -v grep";
+	command = "ps -o etime= -p $(ps aux | grep stunnel | grep -v grep | awk '{print $2}')";
+	style = "red";
+	format = "[TUNNEL OPEN for $output]($style)";
+	command_timeout = 10000;
+      };
+    };
   };
 }
