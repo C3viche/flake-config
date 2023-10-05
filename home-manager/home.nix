@@ -16,6 +16,7 @@
     # ./nvim.nix
     ./wayland.nix
     ./zsh.nix
+    ./starship
   ];
 
   nixpkgs = {
