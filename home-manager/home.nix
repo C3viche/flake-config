@@ -53,10 +53,10 @@
     packages = with pkgs; [ 
       # Waybar:
       # Special override of attributes allows workspaces to correctly be displayed on hyprland
-      (waybar.overrideAttrs (oldAttrs: {
-          mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-        })
-      )
+      # (waybar.overrideAttrs (oldAttrs: {
+      #    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      #  })
+      # )
 
       # Notification daemon
       dunst
