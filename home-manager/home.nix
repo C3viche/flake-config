@@ -17,6 +17,8 @@
     ./wayland
     ./zsh
     ./starship
+    ./kitty
+    ./spotifyd
   ];
 
   nixpkgs = {
@@ -65,9 +67,6 @@
       # Wallpaper daemon
       swww
 
-      # Terminal
-      kitty
-
       # App launcher
       rofi-wayland
       
@@ -75,10 +74,14 @@
       librewolf
       chromium
 
+      # Thems/colors
+      pywal
+
+      # Programming Languages
+      python311
+
       # Extra
-      vscode
-      discocss
-      spotifyd
+      neofetch
     ];
   };
 
