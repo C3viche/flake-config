@@ -1,5 +1,11 @@
 {pkgs, ...}: {
   hardware = {
+    # Bluetooth
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+
     # Opengl
     opengl.enable = true;
 

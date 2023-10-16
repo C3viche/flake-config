@@ -16,6 +16,9 @@
     # Enable CUPS to print documents
     printing.enable = true;
 
+    # GUI for Bluetooth
+    blueman.enable = true;
+
     openssh = {
       enable = true;
 
