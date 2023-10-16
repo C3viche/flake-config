@@ -1,0 +1,5 @@
+{
+  programs.spotifyd = {
+    enable = true;
+  };
+}
