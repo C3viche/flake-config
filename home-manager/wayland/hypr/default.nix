@@ -22,7 +22,10 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-# exec-once = waybar & hyprpaper & firefox
+exec-once = waybar & -s ../waybar/style.css
+exec-once = swww init &
+exec-once = nm-applet --indicator &
+exec-once = dunst
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -127,14 +130,14 @@ device:epic-mouse-v1 {
 $mainMod = SUPER
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, Q, exec, kitty
+bind = $mainMod, Q, exec, kitty 
 bind = $mainMod, C, killactive,
 bind = $mainMod, M, exit,
 bind = $mainMod, E, exec, dolphin
 bind = $mainMod, V, togglefloating,
-bind = $mainMod, R, exec, wofi --show drun
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
+bind = $mainMod, S, exec, rofi -show drun -show-icons
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, left, movefocus, l
