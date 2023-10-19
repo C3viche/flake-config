@@ -19,6 +19,7 @@
     ./starship
     ./kitty
     ./spotifyd
+    ./btop
   ];
 
   nixpkgs = {
