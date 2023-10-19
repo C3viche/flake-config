@@ -17,6 +17,12 @@
       # Nvim
       vi = "nvim";
       vim = "nvim";
+
+      # Sleep
+      sleep = "systemctl suspend";
     };
+    initExtra = "
+      (cat ~/.cache/wal/sequences &)
+    ";
   };
 }
