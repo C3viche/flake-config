@@ -14,12 +14,14 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+#    ./cava
     ./wayland
     ./zsh
     ./starship
     ./kitty
     ./spotifyd
     ./btop
+    ./rofi
   ];
 
   nixpkgs = {
@@ -44,6 +46,10 @@
     };
   };
 
+  gtk = {
+    iconTheme.name = "papirus-icon-theme";
+  };
+
   home = {
     username = "c3viche";
     homeDirectory = "/home/c3viche";
@@ -61,6 +67,12 @@
       #  })
       # )
 
+      # Audio control
+      pavucontrol
+
+      # Network GUI
+      networkmanagerapplet
+
       # Notification daemon
       dunst
       libnotify
@@ -68,9 +80,6 @@
       # Wallpaper daemon
       swww
 
-      # App launcher
-      rofi-wayland
-      
       # Browsers
       librewolf
       chromium
@@ -83,6 +92,8 @@
 
       # Extra
       neofetch
+      ani-cli
+      discord
     ];
   };
 
