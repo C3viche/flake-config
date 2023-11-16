@@ -1,121 +1,91 @@
 {
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   programs.waybar = {
     enable = true;
-    systemd = {
-      enable = false;
-      target = "graphical-session.target";
-    };
-    settings = [
-      {
+    package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
+    settings = {
+      mainBar = {
         layer = "top";
-        position = "top";
-        modules-left = [
-          "custom/launcher"
-          "wlr/workspaces"
-          "custom/weather"
-          "idle_inhibitor"
-          # "cava"
-          "custom/cava-internal"
-        ];
-        modules-center = [
-          "clock"
-        ];
-        modules-right = [
-          "pulseaudio"
-          "pulseaudio#microphone"
-          "memory"
-          "cpu"
-          "network"
-          "tray"
-        ];
-        "custom/launcher" = {
-          "format" = " ";
-          "on-click" = "pkill rofi || rofi -show drun";
-        };
-        "idle_inhibitor" = {
-          "format" = "{icon}";
-          "format-icons" = {
-            "activated" = "";
-            "deactivated" = "";
-          };
-        };
+        position = "left";
+        modules-left = ["wlr/workspaces"];
+        modules-center = [];
+        modules-right = ["pulseaudio" "network" "backlight" "battery" "clock" "tray" "custom/power"];
+
         "wlr/workspaces" = {
-          "format" = "{icon}";
-          "on-click" = "activate";
-          "on-scroll-up" = "hyprctl dispatch workspace e+1";
-          "on-scroll-down" = "hyprctl dispatch workspace e-1";
-          "format-icons" = {
-            "1" = "1";
-            "2" = "2";
-            "3" = "3";
-            "4" = "4";
-            "5" = "5";
-            "6" = "6";
-            "7" = "7";
-            "8" = "8";
-            "9" = "9";
-            "10" = "10";
+          disable-scroll = true;
+          sort-by-name = true;
+          format = "{icon}";
+          format-icons = {default = "";};
+        };
+
+        pulseaudio = {
+          format = " {icon} ";
+          format-muted = "ﱝ";
+          format-icons = ["奄" "奔" "墳"];
+          tooltip = true;
+          tooltip-format = "{volume}%";
+        };
+
+        network = {
+          format-wifi = " ";
+          format-disconnected = "睊";
+          format-ethernet = " ";
+          tooltip = true;
+          tooltip-format = "{signalStrength}%";
+        };
+
+        backlight = {
+          device = "intel_backlight";
+          format = "{icon}";
+          format-icons = ["" "" "" "" "" "" "" "" ""];
+          tooltip = true;
+          tooltip-format = "{percent}%";
+        };
+
+        battery = {
+          states = {
+            warning = 30;
+            critical = 15;
           };
+          format = "{icon}";
+          format-charging = "";
+          format-plugged = "";
+          format-icons = ["" "" "" "" "" "" "" "" "" "" "" ""];
+          tooltip = true;
+          tooltip-format = "{capacity}%";
         };
-        "custom/cava-internal" = {
-          "exec" = "sleep 1s && cava-internal";
-          "tooltip" = false;
+
+        "custom/power" = {
+          tooltip = false;
+          on-click = "powermenu";
+          format = "襤";
         };
-        "temperature" = {
-          "thermal-zone" = 2;
-          "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
-          "format" = " {temperatureC}°C";
+
+        clock = {
+          tooltip-format = ''
+            <big>{:%Y %B}</big>
+            <tt><small>{calendar}</small></tt>'';
+          format-alt = ''
+             {:%d
+             %m
+            %Y}'';
+          format = ''
+            {:%H
+            %M}'';
         };
-        "pulseaudio" = {
-          "scroll-step" = 5;
-          "format" = "{icon} {volume}%";
-          "format-muted" = "󰸈 Muted";
-          "format-icons" = {
-            "default" = ["" "" "󱄠"];
-          };
-          "on-click" = "pamixer -t";
-          "on-click-right" = "pavucontrol";
+
+        tray = {
+          icon-size = 21;
+          spacing = 10;
         };
-        "pulseaudio#microphone" = {
-          "format" = "{format_source}";
-          "format-source" = "󰍬 {volume}%";
-          "format-source-muted" = "󰍭 Muted";
-          "on-click" = "pamixer --default-source -t";
-          "on-scroll-up" = "pamixer --default-source -i 5";
-          "on-scroll-down" = "pamixer --default-source -d 5";
-          "scroll-step" = 5;
-          "on-click-right" = "pavucontrol";
-        };
-        "clock" = {
-          "interval" = 1;
-          # "format" = "{:%I:%M %p  %A %b %d}";
-          "format" = "{:%A %d %b - %I:%M %p}";
-          "tooltip-format" = "<tt>{calendar}</tt>";
-        };
-        "memory" = {
-          "interval" = 3;
-          "format" = " {percentage}%";
-        };
-        "cpu" = {
-          "interval" = 3;
-          "format" = " {usage}%";
-        };
-        "network" = {
-          "interval" = 1;
-          "format" = "󰣺 Connected";
-          "format-alt" = " {bandwidthUpBytes} -  {bandwidthDownBytes}";
-          "format-disconnected" = "󰣼 Disconnected";
-        };
-        "custom/weather" = {
-          "exec" = "python3 ~/.config/waybar/weather.py";
-          "restart-interval" = 300;
-          "return-type" = "json";
-        };
-        "tray" = {
-          "icon-size" = 12;
-          "spacing" = 5;
-        };
-      }
-    ];
+      };
+    };
+
+    style = builtins.readFile ./style.css;
   };
 }
