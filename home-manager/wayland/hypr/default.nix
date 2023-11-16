@@ -22,10 +22,11 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-exec-once = waybar & -s ../waybar/style.css
+exec-once = waybar -s ~/flake-config/home-manager/wayland/waybar/style.css &
 exec-once = swww init &
 exec-once = nm-applet --indicator &
 exec-once = dunst
+exec-once = hyprctl setcursor Bibata-Modern-Ice 24
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -176,6 +177,10 @@ bind = $mainMod, mouse_up, workspace, e-1
 # Move/resize windows with mainMod + LMB/RMB and dragging
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
+
+# Volume
+binde =, XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+binde =, XF86AudioLowerVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-
     '';
   };
 }
