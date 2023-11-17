@@ -22,7 +22,7 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-exec-once = waybar -s ~/flake-config/home-manager/wayland/waybar/style.css &
+exec-once = waybar & #-s ~/flake-config/home-manager/wayland/waybar/style.css &
 exec-once = swww init &
 exec-once = nm-applet --indicator &
 exec-once = dunst
